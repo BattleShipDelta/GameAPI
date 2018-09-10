@@ -4,8 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "start": "node .",
-    "test": "jest"
+    "test": "jest",
+    "watch": "nodemon ."
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   "devDependencies": {
     "babel-register": "^6.26.0",
     "dotenv": "^6.0.0",
+    "eslint": "^5.5.0",
     "express": "^4.16.3",
     "jest": "^23.6.0",
     "mongoose": "^5.2.14"
