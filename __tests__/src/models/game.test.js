@@ -16,7 +16,7 @@ describe('game model', ()=> {
     let game = new Game(user1, user2);
 
     expect(game.id).toBeDefined();
-    expect(function(){let game2 = new Game(user1,user2,user3);}).toThrow(Error);
+    expect(function(){new Game(user1,user2,user3);}).toThrow(Error);
   });
   it('can create a new objects for new game', ()=> {
     let game = new Game(user1, user2);
@@ -30,6 +30,7 @@ describe('game model', ()=> {
   });
   it('can create ships for each user', ()=> {
     let game = new Game(user1, user2);
+    console.log(game);
     console.log(user1.ships);
 
     expect(user1.ships).toBeDefined();
