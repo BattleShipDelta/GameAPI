@@ -2,9 +2,12 @@
   "name": "GameAPI",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "lint": "eslint .",
+
+    "lint:fix": "eslint --fix .",
+    "start": "node .",
     "test": "jest",
     "watch": "nodemon ."
   },
@@ -19,8 +22,9 @@
     "url": "https://github.com/BattleShipDelta/GameAPI/issues"
   },
   "homepage": "https://github.com/BattleShipDelta/GameAPI#readme",
-  "devDependencies": {
+
     "cross-env": "^5.2.0",
+
     "eslint": "^5.5.0",
     "express": "^4.16.3",
     "jest": "^23.6.0",
