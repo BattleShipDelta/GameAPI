@@ -19,6 +19,9 @@ class Board{
 
 class Game{
   constructor(...users){
+    if (users.length > 2) {
+      throw new Error;
+    }
     users.forEach(user =>{
       user.board = new Board(user);
       user.ships = {
