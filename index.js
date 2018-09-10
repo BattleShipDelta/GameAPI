@@ -2,5 +2,5 @@
 
 function deployment(module) {
 
-  let productionUrl = ''
+  let productionUrl = 'https://battleshipdelta.herokuapp.com/';
 }
