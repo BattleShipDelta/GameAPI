@@ -9,4 +9,4 @@ export default (req, res, next) => {
   res.json({
     error: 'Not Found',
   });
-}
+};
