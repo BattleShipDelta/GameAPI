@@ -3,8 +3,8 @@
 import uuid from 'uuid';
 
 class Board{
-  constructor(user){
-    this.id = user.id;
+  constructor(player){
+    this.id = player.name;
     this.grid = {
       'a': [1,2,3,4,5],
       'b': [1,2,3,4,5],
@@ -17,14 +17,27 @@ class Board{
   }
 }
 
+class Player{
+  constructor(user){
+    this.name = user.name;
+    this.ships = null;
+    this.board = null;
+    this.isTurn = true;
+  }
+}
+
 class Game{
   constructor(...users){
     if (users.length > 2) {
       throw new Error;
     }
+    this.players = [];
     users.forEach(user =>{
-      user.board = new Board(user);
-      user.ships = {
+      this.players.push(new Player(user));
+    });
+    this.players.forEach(player =>{
+      player.board = new Board(player);
+      player.ships = {
         'fishingBoat': {
           'length': 2,
           'coordinates': [null, null],
@@ -48,7 +61,8 @@ class Game{
     this.id = uuid();
     this.turn = 'Both players placing ships';
   }
-  playerRestrict(req){
+  // Might not use this one, use option 2 for now
+  turnHandler(req){
     let conditions = ['Player 1', 'Player 2', 'Both players placing ships', 'Player 1 placing ships', 'Player 2 placing ships'];
     if(this.turn !== 'Game Over'){
       if(this.turn === conditions[0] || this.turn === conditions[1]){
@@ -90,9 +104,19 @@ class Game{
     }
     return 'This game has ended';
   }
-  changeTurn(req){
-    
-
+  //use this option for now
+  turnHandler2(player){
+    if(player.isTurn !== true){
+      return 'Not your turn';
+    }
+    this.players.forEach(player => {
+      if (player.isTurn === false){
+        player.isTurn = true;
+      } else{
+        player.isTurn = false;
+      }
+    });
+    return;
   }
 }
 

@@ -1,15 +1,15 @@
 'use strict';
 
-const Game = require('../../../src/models/game');
+const Game = require('../../../src/constructors/game');
 
 describe('game model', ()=> {
   let user1;
   let user2;
   let user3;
   beforeEach(()=>{
-    user1 = {};
-    user2 = {};
-    user3 = {};
+    user1 = {'name':1};
+    user2 = {'name':2};
+    user3 = {'name':3};
   });
 
   it('can check that each game has 2 users', ()=>{
