@@ -16,8 +16,8 @@ const MONGODB_URI = process.env.MONGODB_URI;
 if(!MONGODB_URI) throw new Error('PORT not set!');
 
 const mongoConnect = (uri) => {
-    return mongoose.connect(uri, { useNewUrlParser: true });
+  return mongoose.connect(uri, { useNewUrlParser: true });
 };
 mongoConnect(MONGODB_URI)
-.then(() => server.start(process.env.PORT))
-.then(() => console.log(`Listening on ${PORT}`));
+  .then(() => server.start(process.env.PORT))
+  .then(() => console.log(`Listening on ${PORT}`));
