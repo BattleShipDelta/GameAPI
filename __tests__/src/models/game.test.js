@@ -20,19 +20,55 @@ describe('game model', ()=> {
   });
   it('can create a new objects for new game', ()=> {
     let game = new Game(user1, user2);
-    console.log(user1.board);
+    console.log(game.players[0].board);
 
-    expect(user1.board).toBeDefined();
-    expect(user2.board).toBeDefined();
-    expect(user1.board.grid).toBeDefined();
+    expect(game.players[0].board).toBeDefined();
+    expect(game.players[1].board).toBeDefined();
+    expect(game.players[0].board.grid).toBeDefined();
 
     expect(game.turn).toBe('Both players placing ships');
   });
   it('can create ships for each user', ()=> {
     let game = new Game(user1, user2);
     console.log(game);
-    console.log(user1.ships);
+    console.log(game.players[0].ships);
 
-    expect(user1.ships).toBeDefined();
+    expect(game.players[0].ships).toBeDefined();
+  });
+  describe('Players',()=>{
+    var game;
+    beforeEach(()=>{
+      game = new Game(user1, user2);
+    });
+    it('creates a new player for each user', ()=>{
+      expect(game.players.length).toBe(2);
+      let player1 = game.players[0];
+      let player2 = game.players[1];
+      expect(player1.name).toBe(1);
+      expect(player2.name).toBe(2);
+      expect(player1.isTurn).toBe(true);
+      expect(player2.isTurn).toBe(true);
+    });
+    it('has properties filled by the game', ()=>{
+      expect(game.players[0].ships).not.toBe(null);
+    });
+  });
+  describe('Turn Handler',()=>{
+    var game;
+    var player1;
+    var player2;
+    beforeEach(()=>{
+      game = new Game(user1, user2);
+      player1 = game.players[0];
+      player2 = game.players[1];
+    });
+    it('can change the turn status of a player', ()=>{
+      expect(game.turnHandler2(player1)).toBe('1\'s turn was changed.');
+      expect(player1.isTurn).toBe(false);
+      expect(player2.isTurn).toBe(true);
+      game.turnHandler2(player2);
+      expect(player2.isTurn).toBe(false);
+      expect(player1.isTurn).toBe(true);
+    });
   });
 });
