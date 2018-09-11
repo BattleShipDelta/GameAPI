@@ -106,17 +106,20 @@ class Game{
   }
   //use this option for now
   turnHandler2(player){
-    if(player.isTurn !== true){
-      return 'Not your turn';
-    }
-    this.players.forEach(player => {
-      if (player.isTurn === false){
-        player.isTurn = true;
-      } else{
-        player.isTurn = false;
+    let name = player.name;
+    if(player.name === this.players[0].name || player.name === this.players[1].name){
+      if(player.isTurn !== true){
+        return 'Not your turn';
       }
-    });
-    return;
+      this.players.forEach(player => {
+        if(player.name === name){
+          player.isTurn = false;
+        }else{
+          player.isTurn = true;
+        }
+      });
+    }
+    return `${player.name}'s turn was changed.`;
   }
 }
 
