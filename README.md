@@ -17,3 +17,10 @@ Build an API.
 
 ### Planning
 ![DeltaV 401 project whiteboard](/whiteBoard/IMG_6904.JPG)
+# GameAPI
+
+.env file includes
+  
+PORT = 5000
+
+ MONGODB_URI=mongodb://localhost/battleshipdelta

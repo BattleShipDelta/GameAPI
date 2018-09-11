@@ -4,8 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "start": "node .",
-    "test": "jest"
+    "test": "jest",
+    "watch": "nodemon ."
   },
   "repository": {
     "type": "git",
@@ -19,10 +22,23 @@
   },
   "homepage": "https://github.com/BattleShipDelta/GameAPI#readme",
   "devDependencies": {
+    "cross-env": "^5.2.0",
+    "eslint": "^5.5.0",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
+    "supertest": "^3.3.0"
+  },
+  "dependencies": {
+    "babel-env": "^2.4.1",
+    "babel-eslint": "^9.0.0",
     "babel-register": "^6.26.0",
+    "bcrypt": "^3.0.0",
+    "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "jest": "^23.6.0",
-    "mongoose": "^5.2.14"
+    "mongoose": "^5.2.14",
+    "require-all": "^3.0.0",
+    "superagent": "^3.8.3",
+    "uuid": "^3.3.2"
   }
 }
