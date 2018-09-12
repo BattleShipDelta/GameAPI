@@ -40,4 +40,34 @@ describe('user model', () => {
       expect(userAuthenticate.username).toBe(newPlayer.username);
     });
   });
+
+  describe('user authorize()', () => {
+    let password = 'BSD123';
+    let user;
+    beforeAll(async() => {
+      user = new User({
+        username: uuid(),
+        password: password,
+      });
+      await user.save();
+    });
+    afterAll(async() => {
+      await User.deleteMany({ _id: user._id});
+    });
+
+    it('can get usre from a vaild token', async () => {
+      
+      var token = user.generateToken();
+
+      let authorizedUser = await User.authorize(token);
+      expect(authorizedUser).toBeDefined();
+      expect(authorizedUser._id).toEqual(user._id);
+    });
+    it('rejects the authorization with a bad token', async() => {
+      var token = 'BadToken1234';
+
+      let authorization = await User.authorize(token);
+      expect(authorization).toBe(null);
+    });
+  });
 });
