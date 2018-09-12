@@ -16,32 +16,36 @@ class Board{
     };
     this.ships = null;
     this.shotAt = [];
+    this.taken = [];
   }
 }
 
 class Player{
   constructor(user){
     this.name = user.name;
-    this.ships = {
-      'fishingBoat': {
+    this.ships = [
+      {
+        'shipType': 'SS. ETHAN',
         'length': 2,
         'coordinates': [null, null],
         'health': 2,
         'placed': false,
       },
-      'submarine': {
+      {
+        'shipType': 'Submarine',
         'length': 3,
         'coordinates': [null, null, null],
         'health': 3,
         'placed': false,
       },
-      'battleship': {
+      {
+        'shipType': 'Battleship',
         'length': 4,
         'coordinates': [null, null, null, null],
         'health': 4,
         'placed': false,
       },
-    };
+    ];
     this.board = new Board(this);
     this.isTurn = true;
   }
