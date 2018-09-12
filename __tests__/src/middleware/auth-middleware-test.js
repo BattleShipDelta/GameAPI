@@ -113,8 +113,7 @@ describe('auth middleware', () => {
       let res = new FakeResponse();
 
       auth(req, res, (err) => {
-        expect(err).toBeDefined();
-        expect(err.status).toBe(402);
+        expect(err).toHaveProperty('status', 401);
         expect(req.token).not.toBeDefined();
         expect(req.user).not.toBeDefined();
         done();
