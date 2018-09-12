@@ -1,13 +1,12 @@
 'use strict';
 
 const express = require('express');
-import json404 from './src/middleware/404';
+import cors from 'cors';
 import error from './src/middleware/error';
+import json404 from './src/middleware/404';
+
 
 const app = express();
-
-//use middle ware here
-
 
 //add routes
 
