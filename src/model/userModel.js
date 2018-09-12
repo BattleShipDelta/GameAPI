@@ -2,6 +2,8 @@
 
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 
 const userSchema = new Schema({
   username: { type:String, required:true, unique:true },
@@ -20,6 +22,19 @@ userSchema.pre('save', function(next) {
 userSchema.methods.comparePassword= function(password) {
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
+};
+
+userSchema.statics.authenticate = function(auth){
+  let query = { username: auth.username };
+  return this.findOne(query)
+    .then(user => user && user.comparePassword(auth.password));
+};
+
+userSchema.methods.generateToken = function () {
+  const payload ={
+    id: this._id,
+  };
+  return jwt.sign(payload, process.env.SECRET || 'BSD Secret');
 };
 
 export default mongoose.model('users', userSchema);

@@ -18,11 +18,28 @@ describe('user model', () => {
       username: uuid(),
       password: password,
     });
-
     let newPlayer = await user.save();
     expect(newPlayer.password).not.toEqual(password);
     expect( await newPlayer.comparePassword(password)).toBe(newPlayer);
     expect( await newPlayer.comparePassword('password')).toBe(null);
-    // return newPlayer;
+  });
+
+  describe('user.authenticate()', () => {
+    it.only('resolves with user given correct password', async () => {
+      let password = 'BSD123';
+      let user = new User({
+        username: uuid(),
+        password: password,
+      });
+      console.log(user);
+      let newPlayer = await user.save();
+      console.log(newPlayer);
+      let userAuthenticate = await User.authenticate({
+        username: user.username,
+        password: password,
+      });
+      expect(userAuthenticate).toBeDefined();
+      expect(userAuthenticate.username).toBe(newPlayer.username);
+    });
   });
 });
