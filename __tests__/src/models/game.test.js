@@ -3,8 +3,7 @@ import Game from '../../../src/models/gameModel';
 const Player = require('../../../src/constructors/game');
 const mongoConnect = require('../../../src/util/mongo-connect');
 
-const MONGODB_URI = process.env.MONGODB_URI ||
-  'mongodb://localhost/401-2018-instruments';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 describe('game model', ()=> {
   let user1;
