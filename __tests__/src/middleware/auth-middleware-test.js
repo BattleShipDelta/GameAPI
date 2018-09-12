@@ -1,6 +1,6 @@
 'use strict';
 
-jest.mock('../../../src/model/userModel');
+// jest.mock('../../../src/model/userModel');
 
 import auth from '../../../src/middleware/auth-middleware';
 
