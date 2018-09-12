@@ -1,14 +1,19 @@
 'use strict';
 
 const express = require('express');
-import cors from 'cors';
+//import cors from 'cors';
 import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
+import apiRouter from './src/routes/api';
 
-const app = express();
+const app = module.exports = express();
 
 //add routes
+app.use(express.json());
+app.use('/api', apiRouter);
+
+
 
 app.start = (port) => 
   new Promise((resolveCallBack, rejectCallBack) => {
@@ -35,5 +40,3 @@ function html(res, content, statusCode=200, statusMessage='OK') {
   res.write(content);
   res.end();
 }
-
-module.exports = app;
