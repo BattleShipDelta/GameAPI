@@ -3,7 +3,7 @@
 import User from '../../../src/model/userModel';
 import uuid from 'uuid';
 
-const mongoConnect = require('../../../src/util/mongo-connecter');
+const mongoConnect = require('../../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 

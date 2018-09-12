@@ -4,6 +4,7 @@ const Player = require('../../../src/constructors/game');
 const mongoConnect = require('../../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI;
+console.log(MONGODB_URI);
 
 describe('game model', ()=> {
   let user1;
