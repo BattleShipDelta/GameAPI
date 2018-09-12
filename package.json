@@ -1,5 +1,5 @@
 {
-  "name": "GameAPI",
+  "name": "gameapi",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
