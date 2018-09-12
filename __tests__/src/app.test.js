@@ -8,7 +8,7 @@ describe('app', () => {
   it('responds with 404 for a bad path', async () => {
     await request
       .get('/404')
-      .expect(404, { error: "Not Found" })
+      .expect(404, { error: 'Not Found' })
       .expect('Content-Type', 'application/json; charset=utf-8');
   });
 
