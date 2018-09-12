@@ -87,7 +87,7 @@ describe('auth middleware', () => {
 
   describe('Bearer Auth', () => {
     it('works for valid token', done => {
-      let token = 'capNCrunch token';
+      let token = newUser.generateToken();
       let req = {
         headers:{
           authorization: `Bearer ${token}`,
