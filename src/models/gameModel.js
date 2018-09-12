@@ -72,10 +72,10 @@ gameSchema.methods.placeShips = function(player, start, end){
   if(!start){
     return 'Please include coordinates for your ship';
   }
-  if(start.length !== 2 ||){
+  if(start.length !== 2){
     return 'Unrecognized coordinate, try letters a-e and numbers 1-5';
   }
-}
+};
 
 gameSchema.methods.phaseChange = function(player){
   let p = [

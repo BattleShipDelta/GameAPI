@@ -1,8 +1,8 @@
 'use strict';
 
-import mongoose, {Schema} from 'mongoose';
-import Model from '../models/gameModel';
-import uuid from 'uuid';
+// import mongoose, {Schema} from 'mongoose';
+// import Model from '../models/gameModel';
+// import uuid from 'uuid';
 
 class Board{
   constructor(player){
