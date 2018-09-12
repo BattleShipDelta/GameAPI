@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-import cors from 'cors';
+//import cors from 'cors';
 import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
