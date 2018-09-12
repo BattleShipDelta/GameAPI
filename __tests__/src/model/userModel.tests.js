@@ -31,9 +31,7 @@ describe('user model', () => {
         username: uuid(),
         password: password,
       });
-      console.log(user);
       let newPlayer = await user.save();
-      console.log(newPlayer);
       let userAuthenticate = await User.authenticate({
         username: user.username,
         password: password,
