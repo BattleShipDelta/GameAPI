@@ -25,7 +25,7 @@ describe('user model', () => {
   });
 
   describe('user.authenticate()', () => {
-    it.only('resolves with user given correct password', async () => {
+    it('resolves with user given correct password', async () => {
       let password = 'BSD123';
       let user = new User({
         username: uuid(),

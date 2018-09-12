@@ -85,7 +85,7 @@ describe('auth middleware', () => {
     });
   });
 
-  describe.skip('Bearer Auth', () => {
+  describe('Bearer Auth', () => {
     it('works for valid token', done => {
       let token = 'capNCrunch token';
       let req = {
