@@ -76,11 +76,11 @@ app.get('/', (req, res) => {
 
 app.post('/signup', (req, res) => {
   alert('You signed up');
-})
+});
 
 app.get('/signup', (req, res) => {
   res.render('res.body');
-})
+});
 
 app.use(json404);
 app.use(error);
