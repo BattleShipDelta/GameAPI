@@ -11,15 +11,6 @@ export default (req, res, next) => {
     return unauthorized();
   }
 
-  function unauthorized(){
-    res.setHeader('WWW-Authenticate','Basic realm="BSD"');
-    next({
-      status: 401,
-    });
-  }
-
-
-
   if(authHeader.match(/^basic\s+/i)){
     let base64header = authHeader.replace(/^basic\s+/i, '');
     let base64buffer = Buffer.from(base64header, 'base64');
@@ -37,9 +28,7 @@ export default (req, res, next) => {
         }
         unauthorized();
       })
-      .catch(err => {
-        next(err);
-      });
+      .catch(next);
   }
   else if (authHeader.match(/^bearer\s+/i)) {
     let token = authHeader.replace(/^bearer\s+/i, '');
@@ -58,30 +47,11 @@ export default (req, res, next) => {
     unauthorized();
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  function unauthorized(){
+    res.setHeader('WWW-Authenticate','Basic realm="BSD"');
+    next({
+      status: 401,
+    });
+  }
 
 };
