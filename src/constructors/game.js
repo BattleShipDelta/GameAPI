@@ -22,7 +22,7 @@ class Board{
 
 class Player{
   constructor(user){
-    this.name = user.name;
+    this.name = user;
     this.ships = [
       {
         'shipType': 'SS. ETHAN',
