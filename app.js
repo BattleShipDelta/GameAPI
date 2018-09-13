@@ -6,13 +6,14 @@ import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
 import apiRouter from './src/routes/api';
+import inviteRouter from './src/routes/inviteRoute';
 
 
 const app = module.exports = express();
 
 //add routes
 app.use(express.json());
-app.use('/api', apiRouter);
+app.use('/api', apiRouter, inviteRouter);
 
 import authRouter from './src/routes/login-signup';
 app.use(authRouter);

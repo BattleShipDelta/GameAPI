@@ -14,9 +14,9 @@ describe('game model', ()=> {
   let player2;
   let player3;
   beforeEach(()=>{
-    user1 = {'name':1};
-    user2 = {'name':2};
-    user3 = {'name':3};
+    user1 = '1';
+    user2 = '2';
+    user3 = '3';
     player1 = new Player(user1);
     player2 = new Player(user2);
     player3 = new Player(user3);

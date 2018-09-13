@@ -360,7 +360,9 @@ gameSchema.methods.turnHandler = function(player, ...coors){
   }
 };
 
-
+gameSchema.statics.start = function(p1,p2){
+  return new this({players:[p1, p2]});
+} ;
 const Game = mongoose.model('game', gameSchema, 'game');
 
 Game.route = 'game';
