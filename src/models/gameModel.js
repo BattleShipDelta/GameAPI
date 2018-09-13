@@ -47,6 +47,34 @@ function arrayLimit(val) {
   return val.length === 2;
 }
 
+gameSchema.methods.checkStatus = function(user){
+  let isPlayer;
+  let target;
+  this.players.forEach(player =>{
+    if(user.name === player.name){
+      isPlayer = true;
+      target = player;
+    }
+  });
+  if(isPlayer){
+    let shipStatuses = [];
+    target.ships.forEach(ship=>{
+      shipStatuses.push({
+        'shipName': ship.shipType,
+        'shipHealth': ship.health,
+        'shipPlaced': ship.placed,
+        'shipCoordinates': ship.coordinates,
+      });
+    });
+    return {
+      'phase': this.phase,
+      'shipStatuses': shipStatuses,
+      'yourTurn': target.isTurn,
+      'shotAt': target.board.shotAt,
+    };
+  } else return {'phase': this.phase};
+};
+
 gameSchema.methods.gameOverCheck = function(player){
   let conditions = [];
   player.ships.forEach(ship =>{
@@ -170,6 +198,7 @@ gameSchema.methods.placeShips = function(player, start, end){
     }
   });
   let targetBoard = targetPlayer.board;
+  // column is the letter that we find in the board's grid, row is the number in that column
   let columnS = start[0];
   let rowS = start[1];
   let columnE = end[0];
