@@ -51,7 +51,7 @@ gameSchema.methods.checkStatus = function(user){
   let isPlayer;
   let target;
   this.players.forEach(player =>{
-    if(user.name === player.name){
+    if(String(user.name) === player.name){
       isPlayer = true;
       target = player;
     }
@@ -60,10 +60,10 @@ gameSchema.methods.checkStatus = function(user){
     let shipStatuses = [];
     target.ships.forEach(ship=>{
       shipStatuses.push({
-        'shipName': ship.shipType,
-        'shipHealth': ship.health,
-        'shipPlaced': ship.placed,
-        'shipCoordinates': ship.coordinates,
+        'name': ship.shipType,
+        'health': ship.health,
+        'placed': ship.placed,
+        'coordinates': ship.coordinates,
       });
     });
     return {
