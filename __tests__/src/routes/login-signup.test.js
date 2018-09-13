@@ -37,7 +37,7 @@ describe('auth routes', () => {
       return request
         .post('/signup')
         .send({ username2: 'John', password })
-        .expect(400)
+        .expect(400);
     });
 
     it('returns an error if no username is given', () => {
@@ -52,8 +52,8 @@ describe('auth routes', () => {
     it('returns an error if no password is provided', () => {
       return request
         .post('/signup')
-        .send({ username: uuid(), password: ""})
-        .expect(400)
+        .send({ username: uuid(), password: ''})
+        .expect(400);
     });
   });
 

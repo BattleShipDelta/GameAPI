@@ -2,7 +2,7 @@
 
 import superagent from 'superagent';
 
-import express from "express";
+import express from 'express';
 const authRouter = express.Router();
 
 import User from '../model/userModel';
