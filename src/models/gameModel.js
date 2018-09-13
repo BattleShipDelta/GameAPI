@@ -51,7 +51,8 @@ gameSchema.methods.checkStatus = function(user){
   let isPlayer;
   let target;
   this.players.forEach(player =>{
-    if(String(user.name) === player.name){
+    console.log(player.name);
+    if(String(user.username) === player.name){
       isPlayer = true;
       target = player;
     }
