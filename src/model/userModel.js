@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 
 const userSchema = new Schema({
   username: { type:String, required:true, unique:true },
-  password: { type:String, rquired:true },
+  password: { type:String, required:true },
 });
 
 userSchema.pre('save', function(next) {

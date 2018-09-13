@@ -29,6 +29,32 @@ describe('auth routes', () => {
           expect(response.body.token).toBeDefined();
         });
     });
+
+    it('throw an error if username is already in use', () => {
+      const password = uuid();
+      const username1 = 'John';
+      
+      return request
+        .post('/signup')
+        .send({ username2: 'John', password })
+        .expect(400)
+    });
+
+    it('returns an error if no username is given', () => {
+      const password = uuid();
+
+      return request
+        .post('/signup')
+        .send({ username: undefined, password })
+        .expect(400);
+    });
+
+    it('returns an error if no password is provided', () => {
+      return request
+        .post('/signup')
+        .send({ username: uuid(), password: ""})
+        .expect(400)
+    });
   });
 
   describe('login', () => {
