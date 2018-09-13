@@ -45,8 +45,13 @@ describe('an invite', ()=> {
       .post('/api/games')
       .set('Authorization', `Bearer ${token}`)
       .send({'opponent': opponent.username})
-      .expect(200);
-    //TODO: Send game state in response
+      .expect(200)
+      .expect(response=>{
+        console.log(response.text);
+        expect(response.text).toBeDefined();
+
+  
+      });
       
   });
 });

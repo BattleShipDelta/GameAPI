@@ -13,10 +13,11 @@ router.post('/games', auth, async(req,res) => {
   let p2 = new Player(req.body.opponent);
   if (await User.findOne({username: req.body.opponent})){
     let game = Game.start(p1, p2);
-    await game.save();
+    let saved = await game.save();
     console.log(game);
-    res.end();
-    //TODO send game state
+    let message = `Game ${saved._id} was created, players place your ships.`;
+    res.send(message);
+
     return;
   }else{
     res.send(400);
