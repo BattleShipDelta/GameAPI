@@ -63,14 +63,39 @@ describe('game model', ()=> {
       players: [player1, player2],
     });
     console.log(game);
-    game.turnHandler(game.players[0]);
+
+    //Placing ships at start of game
+    game.turnHandler(game.players[0], 'a4', 'a1');
+    expect(game.players[0].ships[2].placed).toBe(true);
+    expect(game.players[0].ships[2].coordinates).toContain('a4','a3','a2', 'a1');
+    expect(function(){
+      game.turnHandler(game.players[0], 'z1142', 'z4');
+    }).toThrow(Error);
+    game.turnHandler(game.players[0], 'c1', 'b1');
+    expect(game.players[0].ships[0].placed).toBe(true);
+    console.log(game.players[0].ships[0].coordinates[1]);
+    game.turnHandler(game.players[0], 'c2', 'e2');
+    expect(game.players[0].ships[1].coordinates).toContain('c2','d2','e2');
     expect(game.players[0].isTurn).toBe(false);
-    expect(game.players[1].isTurn).toBe(true);
-    expect(game.turnHandler(game.players[0])).toBe('Not your turn');
     expect(game.phase).toBe('2: Player 2 placing ships');
-    game.turnHandler(game.players[1]);
-    expect(game.phase).toBe('3: Player 1s turn');
+    expect(game.players[0].board.taken).toContain('a4', 'a3', 'a2', 'a1', 'c1', 'b1', 'c2', 'd2', 'e2');
+    expect(game.players[1].isTurn).toBe(true);
+    game.turnHandler(game.players[1], 'a4', 'a1');
+    game.turnHandler(game.players[1], 'c1', 'b1');
+    game.turnHandler(game.players[1], 'c2', 'e2');
     expect(game.players[1].isTurn).toBe(false);
+    expect(game.phase).toBe('3: Player 1s turn');
+    expect(game.players[0].isTurn).toBe(true);
+
+    //Shooting stuff
+    expect(game.turnHandler(game.players[0], 'e4')).toBe('e4 was a miss | 4: Player 2s turn | 1\'s turn was processed.');
+    expect(game.players[0].board.shotAt).toContain('e4');
+    game.turnHandler(game.players[1], 'a1');
+    expect(game.players[0].ships[2].health).toBe(3);
 
   });
 });
+
+// expect(function(){
+//   game.turnHandler(game.players[0], 'z1142', 'z4');
+// }).toThrow(Error);
