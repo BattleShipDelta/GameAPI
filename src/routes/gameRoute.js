@@ -70,7 +70,7 @@ router.post('/games/:id/move', auth, async(req, res)=>{
   }
   try{
     let result = game.turnHandler(player, ...coors);
-    console.log({ coors, result });
+    game.save();
     res.send(200, { result });
   }
   catch(error){
