@@ -13,12 +13,12 @@ const app = module.exports = express();
 
 //add routes
 app.use(express.json());
-app.use('/api', apiRouter, inviteRouter);
-
+app.use(express.urlencoded({ extended: true }));
 
 import authRouter from './src/routes/login-signup';
 app.use(authRouter);
 
+app.use('/api', apiRouter, inviteRouter);
 
 app.start = (port) => 
   new Promise((resolveCallBack, rejectCallBack) => {
@@ -49,11 +49,9 @@ app.get('/', (req, res) => {
           </p>
           <form method='post' action='/signup'>
             <p>Username</p>
-            <input placeholder=username>
+            <input name="username" placeholder="username">
             <p> Password</p>
-            <input placeholder=password>
-            <p>Repeat Password</p>
-            <input placeholder='repeat password'>
+            <input name="password" type="password" placeholder="password">
             <button>
               Submit
             </button>
@@ -73,14 +71,6 @@ app.get('/', (req, res) => {
     </body>
   </html>`
   );
-});
-
-app.post('/signup', (req, res) => {
-  alert('You signed up');
-});
-
-app.get('/signup', (req, res) => {
-  res.render('res.body');
 });
 
 app.use(json404);

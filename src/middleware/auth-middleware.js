@@ -5,7 +5,7 @@ import User from '../model/userModel';
 export default (req, res, next) => {
   let auth = {};
   let authHeader = req.headers.authorization;
-
+  console.log('auth', req.url);
 
   if(!authHeader){
     return unauthorized();

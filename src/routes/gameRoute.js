@@ -49,8 +49,6 @@ router.post('/games/:id/move', auth, async(req, res)=>{
     console.log(error.message);
     res.send(403, { error: error.message });
   }
-  res.send(500);
-
 });
 
 export default router;
