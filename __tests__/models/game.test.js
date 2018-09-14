@@ -54,7 +54,7 @@ describe('game model', ()=> {
     expect(game.players[0].board.ships).toBeDefined();
     expect(game.players[0].board.grid.a).toBeDefined();
     expect(game.players[0].ships.length).toBe(3);
-    expect(game.players[0].ships[0].shipType).toBe('SS. ETHAN');
+    expect(game.players[0].ships[0].shipType).toBe('Cruiser');
 
     expect(game.phase).toBe('0: Both players placing ships');
   });

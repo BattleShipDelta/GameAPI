@@ -25,7 +25,7 @@ class Player{
     this.name = user;
     this.ships = [
       {
-        'shipType': 'SS. ETHAN',
+        'shipType': 'Cruiser',
         'length': 2,
         'coordinates': [null, null],
         'health': 2,
