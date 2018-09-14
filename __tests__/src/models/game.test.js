@@ -4,7 +4,7 @@ const Player = require('../../../src/constructors/game');
 const mongoConnect = require('../../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI;
-console.log(MONGODB_URI);
+//console.log(MONGODB_URI);
 
 describe('game model', ()=> {
   let user1;
@@ -69,7 +69,7 @@ describe('game model', ()=> {
     //Placing ships at start of game player ONE test for turn ONE W/(2 length ship)VER
     game.turnHandler(game.players[0], 'c1', 'b1');
     expect(game.players[0].ships[0].placed).toBe(true);
-    console.log(game.players[0].ships[0].coordinates[1]);
+    //console.log(game.players[0].ships[0].coordinates[1]);
     //Player ONE test for turn ONE W/(3 length ship)VER
     game.turnHandler(game.players[0], 'c2', 'e2');
     expect(game.players[0].ships[1].coordinates).toContain('c2','d2','e2');
@@ -90,22 +90,6 @@ describe('game model', ()=> {
     expect(game.phase).toBe('2: Player 2 placing ships');
     //Check for turn Status now that player one is done. Player two turn should be true.
     expect(game.players[1].isTurn).toBe(true);
-    
-    // //Player Two takes turn.
-    // game.turnHandler(game.players[1], 'a4', 'a1');
-    // game.turnHandler(game.players[1], 'c1', 'b1');
-    // game.turnHandler(game.players[1], 'c2', 'e2');
-    // //Player Two turn over. 
-    // expect(game.players[1].isTurn).toBe(false);
-    // //Phase check post Players first turns. 
-    // expect(game.phase).toBe('3: Player 1s turn');
-    // expect(game.players[0].isTurn).toBe(true);
-
-    //Shooting stuff
-    // expect(game.turnHandler(game.players[0], 'e4')).toBe('e4 was a miss | 4: Player 2s turn | 1\'s turn was processed.');
-    // expect(game.players[0].board.shotAt).toContain('e4');
-    // game.turnHandler(game.players[1], 'a1');
-    // expect(game.players[0].ships[2].health).toBe(3);   
   });
 
   it('Player TWO takes turn.)', ()=>{
@@ -180,7 +164,7 @@ describe('game model', ()=> {
     // c:   [hx, hx,  h0,  h0, h0]
     // d:   [1,  hx,  h0,  h0, 5]
     // e    [1,  hx,  h0,  h0, 5]
-    console.log('Shooting stuff through phases.');
+    //console.log('Shooting stuff through phases.');
     //   '4: Player 2s turn',
     expect(game.turnHandler(game.players[0], 'b4')).toBe('b4 was a miss | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.players[0].board.shotAt).toContain('b4');
@@ -189,29 +173,29 @@ describe('game model', ()=> {
     expect(game.turnHandler(game.players[0], 'b5')).toBe('b5 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'a2')).toBe('a2 was a hit | 3: Player 1s turn | 2\'s turn was processed.');
     expect(game.turnHandler(game.players[0], 'c5')).toBe('A ship was sunk | 4: Player 2s turn | 1\'s turn was processed.');
-    console.log('Player One Sinks Player Two 2 peice ship.\n');
+    //console.log('Player One Sinks Player Two 2 peice ship.\n');
     expect(game.players[1].ships[0].health).toBe(0);
     expect(game.turnHandler(game.players[1], 'a3')).toBe('a3 was a hit | 3: Player 1s turn | 2\'s turn was processed.');
     expect(game.turnHandler(game.players[0], 'c4')).toBe('c4 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'a4')).toBe('A ship was sunk | 3: Player 1s turn | 2\'s turn was processed.');
-    console.log('Player Two Sinks Player One 4 peice ship.\n');
+    //console.log('Player Two Sinks Player One 4 peice ship.\n');
     expect(game.turnHandler(game.players[0], 'd4')).toBe('d4 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'c2')).toBe('c2 was a hit | 3: Player 1s turn | 2\'s turn was processed.');
     expect(game.turnHandler(game.players[0], 'e3')).toBe('e3 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'd2')).toBe('d2 was a hit | 3: Player 1s turn | 2\'s turn was processed.');
     expect(game.turnHandler(game.players[0], 'd3')).toBe('d3 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'e2')).toBe('A ship was sunk | 3: Player 1s turn | 2\'s turn was processed.');
-    console.log('Player Two Sinks Player One 3 peice ship.\n');
-    console.log(game.players[0].ships[1]);
+    //console.log('Player Two Sinks Player One 3 peice ship.\n');
+    //console.log(game.players[0].ships[1]);
     expect(game.turnHandler(game.players[0], 'c3')).toBe('c3 was a hit | 4: Player 2s turn | 1\'s turn was processed.');
     expect(game.turnHandler(game.players[1], 'c1')).toBe('c1 was a hit | 3: Player 1s turn | 2\'s turn was processed.');
     expect(game.players[0].isTurn).toBe(true);
     expect(game.turnHandler(game.players[0], 'b3')).toBe('A ship was sunk | 4: Player 2s turn | 1\'s turn was processed.');
-    console.log('Player ONE Sinks Player TWO 4 peice ship.\n');
+    //console.log('Player ONE Sinks Player TWO 4 peice ship.\n');
     expect(game.players[1].ships[2].health).toBe(0);
     expect(game.players[1].isTurn).toBe(true);
     expect(game.turnHandler(game.players[1], 'b1')).toBe('1 lost | 5: Game Over | 2\'s turn was processed.');
-    console.log('Player Two Sinks Player One 2 peice ship.\n');
+    //console.log('Player Two Sinks Player One 2 peice ship.\n');
    
     //   '5: Game Over',
     expect(game.players[0].ships[0].health).toBe(0);
@@ -226,26 +210,6 @@ describe('game model', ()=> {
     console.log(game.phase);
    
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 });

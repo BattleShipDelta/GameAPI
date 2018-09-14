@@ -43,7 +43,7 @@ const gameSchema = Schema({
 });
 
 function arrayLimit(val) {
-  console.log(val.length);
+  //console.log(val.length);
   return val.length === 2;
 }
 
@@ -114,7 +114,7 @@ gameSchema.methods.shoot = function(player, target, coor){
       let hit;
       ship.coordinates.forEach(coordinate =>{
         if (coordinate === coor){
-          console.log('hit');
+          //console.log('hit');
           hit = true;
         }
       });
