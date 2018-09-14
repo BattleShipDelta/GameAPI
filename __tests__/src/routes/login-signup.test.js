@@ -30,14 +30,19 @@ describe('auth routes', () => {
         });
     });
 
-    it('throw an error if username is already in use', () => {
+    it('throw an error if username is already in use', async () => {
       const password = uuid();
-      const username1 = 'John';
+      const user = new User({
+        username: uuid(),
+        password: password,
+      });
+      await user.save();
       
-      return request
+      console.log('409');
+      await request
         .post('/signup')
-        .send({ username2: 'John', password })
-        .expect(400);
+        .send({ username: user.username, password })
+        .expect(409);
     });
 
     it('returns an error if no username is given', () => {
