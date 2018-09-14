@@ -55,6 +55,30 @@ describe('an invite', ()=> {
         expect(response.text).toBeDefined();
       });     
   });
+  describe('ls but in our api', () => {
+    let game;
+    beforeEach(async() => {
+      let p1 = new Player(user.username);
+      let p2 = new Player(opponent.username);
+      game = Game.start(p1,p2);
+      await game.save();
+    });
+    afterEach(async()=> {
+      await Game.deleteOne({_id: game._id});
+    });
+    it('finds every game that the user is in', async()=> {
+      await request
+        .get('/api/games')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .expect(response=>{
+          expect(typeof response.body).toBe('object');
+          expect(response.body[0]).toHaveProperty('id', game._id.toString());
+          expect(response.body[0]).toHaveProperty('players', [user.username,opponent.username]);
+        });
+    });
+   
+  });
   describe('ship placing', () => {
     let game;
 
