@@ -14,6 +14,7 @@ const app = module.exports = express();
 //add routes
 app.use(express.json());
 app.use('/api', apiRouter, inviteRouter);
+app.use(express.urlencoded());
 
 
 import authRouter from './src/routes/login-signup';
@@ -49,11 +50,9 @@ app.get('/', (req, res) => {
           </p>
           <form method='post' action='/signup'>
             <p>Username</p>
-            <input placeholder=username>
+            <input name="username" placeholder="username">
             <p> Password</p>
-            <input placeholder=password>
-            <p>Repeat Password</p>
-            <input placeholder='repeat password'>
+            <input name="password" type="password" placeholder="password">
             <button>
               Submit
             </button>
