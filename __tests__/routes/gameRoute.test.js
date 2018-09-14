@@ -107,8 +107,9 @@ describe('an invite', ()=> {
       let p1 = new Player(user.username);
       let p2 = new Player(opponent.username);
       game = Game.start(p1,p2);
+      console.log(game.players);
       await game.save();
-      opponentToken = user.generateToken();
+      opponentToken = opponent.generateToken();
     });
     afterEach(async()=> {
       await Game.deleteOne({_id: game._id});
@@ -138,15 +139,22 @@ describe('an invite', ()=> {
           .expect(200)
           .expect({ result: `a1 was a hit | 4: Player 2s turn | ${user.username}'s turn was processed.`});
         await request
+          .get(`/api/games/${game._id}`)
+          .set('Authorization', `Bearer ${token}`)
+          .expect(response=>{
+            console.log({token, opponentToken});
+            console.log(response.body);
+          });
+        await request
           .post(`/api/games/${game._id}/move`)
           .set('Authorization', `Bearer ${opponentToken}`)
           .send({coors:'e5'})
           .expect(200)
           //Shouldn't be Etahn's turn
-          .expect({ result: `e5 was a miss | 4: Player 2s turn | ${user.username}'s turn was processed.` });
+          .expect({ result: `e5 was a miss | 3: Player 1s turn | ${opponent.username}'s turn was processed.` });
       });
       //Bug: turnHandler doesn't check players turn?
-      it.skip('returns 403(forbidden) when you play out of turn', async()=> {
+      it('returns 403(forbidden) when you play out of turn', async()=> {
 
         await request
           .post(`/api/games/${game._id}/move`)
@@ -157,12 +165,12 @@ describe('an invite', ()=> {
     });
   
     //Error 'no coordinates defined' is not specific enough?
-    it.skip('returns 400(bad request) when a player shoots off the board', async()=> {
+    it('returns 400(bad request) when a player shoots off the board', async()=> {
       await request
         .post(`/api/games/${game._id}/move`)
         .set('Authorization', `Bearer ${token}`)
         .send({coors:'a11'})
-        .expect(400);
+        .expect(403);
     });
   });
 });
