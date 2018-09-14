@@ -4,6 +4,8 @@ import app from '../../../app';
 import User from '../../../src/model/userModel';
 import Game from '../../../src/models/gameModel';
 import Player from '../../../src/constructors/game';
+
+import uuid from 'uuid';
 const request = require('supertest')(app);
 const mongoConnect = require('../../../src/util/mongo-connect');
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -12,21 +14,21 @@ describe('an invite', ()=> {
   let user;
   let opponent;
   let token;
-  beforeAll(async() => {
+  beforeEach(async() => {
     await mongoConnect(MONGODB_URI);
     user = new User({
-      username:'Etahn',
+      username:uuid(),
       password:'BananaPhone123',
     });
     await user.save();
     opponent = new User({
-      username: 'Dylan',
+      username: uuid(),
       password: 'AppleBook123',
     });
     await opponent.save();
     token = user.generateToken();
   });
-  afterAll(async() => {
+  afterEach(async() => {
     await User.deleteOne({ _id: user._id});
     await User.deleteOne({ _id: opponent._id});
   });
@@ -53,16 +55,38 @@ describe('an invite', ()=> {
         expect(response.text).toBeDefined();
       });     
   });
+  describe('ls but in our api', () => {
+    let game;
+    beforeEach(async() => {
+      let p1 = new Player(user.username);
+      let p2 = new Player(opponent.username);
+      game = Game.start(p1,p2);
+      await game.save();
+    });
+    afterEach(async()=> {
+      await Game.deleteOne({_id: game._id});
+    });
+    it('finds every game that the user is in', async()=> {
+      await request
+        .get('/api/games')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .expect(response=>{
+          expect(typeof response.body).toBe('object');
+          expect(response.body[0]).toHaveProperty('id', game._id.toString());
+          expect(response.body[0]).toHaveProperty('players', [user.username,opponent.username]);
+        });
+    });
+   
+  });
   describe('ship placing', () => {
     let game;
-    let opponentToken;
 
     beforeEach(async() => {
       let p1 = new Player(user.username);
       let p2 = new Player(opponent.username);
       game = Game.start(p1,p2);
       await game.save();
-      opponentToken = user.generateToken();
     });
     afterEach(async()=> {
       await Game.deleteOne({_id: game._id});
@@ -112,14 +136,14 @@ describe('an invite', ()=> {
           .set('Authorization', `Bearer ${token}`)
           .send({coors:'a1'})
           .expect(200)
-          .expect({ result: 'a1 was a hit | 4: Player 2s turn | Etahn\'s turn was processed.'});
+          .expect({ result: `a1 was a hit | 4: Player 2s turn | ${user.username}'s turn was processed.`});
         await request
           .post(`/api/games/${game._id}/move`)
           .set('Authorization', `Bearer ${opponentToken}`)
           .send({coors:'e5'})
           .expect(200)
           //Shouldn't be Etahn's turn
-          .expect({ result: 'e5 was a miss | 4: Player 2s turn | Etahn\'s turn was processed.' });
+          .expect({ result: `e5 was a miss | 4: Player 2s turn | ${user.username}'s turn was processed.` });
       });
       //Bug: turnHandler doesn't check players turn?
       it.skip('returns 403(forbidden) when you play out of turn', async()=> {
