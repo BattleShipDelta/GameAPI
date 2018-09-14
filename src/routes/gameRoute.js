@@ -26,6 +26,28 @@ router.post('/games', auth, async(req,res) => {
   
 });
 
+router.get('/games', auth, async(req, res, next)=>{
+  let username = req.user.username;
+  console.log(username);
+  let games = await Game.find({
+    players:{
+      $elemMatch: {
+        name: username,
+      },
+    },
+  });
+  let gameIds = [];
+  games.forEach(game=>{
+    gameIds.push({
+      id:game._id,
+      players:game.players.map(player => player.name),
+    });
+  });
+  res.json(gameIds);
+  return;
+});
+ 
+
 router.post('/games/:id/move', auth, async(req, res)=>{
   console.log('move route');
   let game = await Game.findById(req.params.id);
