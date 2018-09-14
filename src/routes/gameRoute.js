@@ -63,24 +63,18 @@ router.get('/games/:id', auth, (req, res, next)=>{
 
 router.post('/games/:id/move', auth, async(req, res)=>{
   let game = await Game.findById(req.params.id);
-  console.log(game);
-  console.log(req.body);
-  console.log(req.body.coors);
   let player = game.players.find(player => player.name === req.user.username);
-  let coords = req.body.coors;
-  if(typeof(coords) !== 'object' ){
-    coords = [coords];
+  let coors = req.body.coors;
+  if(typeof(coors) !== 'object' ){
+    coors = [coors];
   }
   try{
-    let result = game.turnHandler(player, ...coords);
-    console.log(result);
+    let result = game.turnHandler(player, ...coors);
+    console.log({ coors, result });
     res.send(200, { result });
-    
-    
   }
   catch(error){
-    console.log(game.phase);
-    console.log(error.message);
+    console.log({ game, error });
     res.send(403, { error: error.message });
   }
 });
