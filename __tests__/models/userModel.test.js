@@ -1,9 +1,9 @@
 'use strict';
 
-import User from '../../../src/model/userModel';
+import User from '../../src/models/userModel';
 import uuid from 'uuid';
 
-const mongoConnect = require('../../../src/util/mongo-connect');
+const mongoConnect = require('../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import app from '../../app';
+import app from '../app';
 const request = require('supertest')(app);
 
 describe('app', () => {

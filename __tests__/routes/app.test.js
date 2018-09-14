@@ -1,12 +1,12 @@
 'use strict';
 
-import app from '../../../app';
-import Player from '../../../src/constructors/game';
-import User from '../../../src/model/userModel';
-import Game from '../../../src/models/gameModel';
+import app from '../../app';
+import Player from '../../src/constructors/game';
+import User from '../../src/models/userModel';
+import Game from '../../src/models/gameModel';
 import uuid from 'uuid';
 const request = require('supertest')(app);
-const mongoConnect = require('../../../src/util/mongo-connect');
+const mongoConnect = require('../../src/util/mongo-connect');
 const MONGODB_URI = process.env.MONGODB_URI;
 
 

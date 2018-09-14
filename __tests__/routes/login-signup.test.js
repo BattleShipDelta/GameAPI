@@ -1,12 +1,12 @@
 'use strict';
 
-import app from '../../../app';
+import app from '../../app';
 const request = require('supertest')(app);
 
 import uuid from 'uuid';
-import User from '../../../src/model/userModel';
+import User from '../../src/models/userModel';
 
-const mongoConnect = require('../../../src/util/mongo-connect');
+const mongoConnect = require('../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI ||
   'mongodb://localhost/401-2018-auth';

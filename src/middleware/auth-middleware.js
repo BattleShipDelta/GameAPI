@@ -1,6 +1,6 @@
 'use strict';
 
-import User from '../model/userModel';
+import User from '../models/userModel';
 
 export default (req, res, next) => {
   let auth = {};

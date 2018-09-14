@@ -5,7 +5,7 @@ import superagent from 'superagent';
 import express from 'express';
 const authRouter = express.Router();
 
-import User from '../model/userModel';
+import User from '../models/userModel';
 import auth from '../middleware/auth-middleware';
 
 authRouter.post('/signup', (req, res, next) => {
