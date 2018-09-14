@@ -14,9 +14,9 @@ describe('game model', ()=> {
   let player2;
   let player3;
   beforeEach(()=>{
-    user1 = {'name':1};
-    user2 = {'name':2};
-    user3 = {'name':3};
+    user1 = '1';
+    user2 = '2';
+    user3 = '3';
     player1 = new Player(user1);
     player2 = new Player(user2);
     player3 = new Player(user3);
@@ -30,10 +30,12 @@ describe('game model', ()=> {
     //console.log(testGame.players[0].isTurn);
     //console.log(testGame);
     expect(testGame._id).toBeDefined();
+
     let testGame2 = new Game({
       players: [player1, player2, player3],
     });
     //console.log(testGame2);
+
 
     return expect(new Game({
       players: [player1, player2, player3],
@@ -51,10 +53,8 @@ describe('game model', ()=> {
     expect(game.players[0].board.grid).toBeDefined();
     expect(game.players[0].board.ships).toBeDefined();
     expect(game.players[0].board.grid.a).toBeDefined();
-    //console.log(game.players[0].board.ships);
     expect(game.players[0].ships.length).toBe(3);
     expect(game.players[0].ships[0].shipType).toBe('SS. ETHAN');
-    //expect(game.players[0].board.ships.length).toBe(3);
 
     expect(game.phase).toBe('0: Both players placing ships');
   });
