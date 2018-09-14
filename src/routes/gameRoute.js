@@ -33,8 +33,12 @@ router.post('/games/:id/move', auth, async(req, res)=>{
   console.log(req.body);
   console.log(req.body.coors);
   let player = game.players.find(player => player.name === req.user.username);
+  let coords = req.body.coors;
+  if(typeof(coords) !== 'object' ){
+    coords = [coords];
+  }
   try{
-    let result = game.turnHandler(player, req.body.coors);
+    let result = game.turnHandler(player, ...coords);
     console.log(result);
     res.send(200, { result });
     

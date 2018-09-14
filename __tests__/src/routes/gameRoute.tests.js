@@ -51,10 +51,29 @@ describe('an invite', ()=> {
       .expect(response=>{
         console.log(response.text);
         expect(response.text).toBeDefined();
+      });     
+  });
+  describe('ship placing', () => {
+    let game;
+    let opponentToken;
 
-  
-      });
-      
+    beforeEach(async() => {
+      let p1 = new Player(user.username);
+      let p2 = new Player(opponent.username);
+      game = Game.start(p1,p2);
+      await game.save();
+      opponentToken = user.generateToken();
+    });
+    afterEach(async()=> {
+      await Game.deleteOne({_id: game._id});
+    });
+    it('can place a ship on the board', async()=> {
+      await request
+        .post(`/api/games/${game._id}/move`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({coors:['a1','a2']})
+        .expect(200);
+    });
   });
   describe('move route', () => {
     let game;
@@ -122,5 +141,4 @@ describe('an invite', ()=> {
         .expect(400);
     });
   });
-    
 });
