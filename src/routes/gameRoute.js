@@ -48,8 +48,20 @@ router.get('/games', auth, async(req, res, next)=>{
 });
  
 
+router.get('/games/:id', auth, (req, res, next)=>{
+  return Game.findById(req.params.id)
+    .then(game =>{
+      if(!game){
+        res.sendStatus(404);
+        return;
+      }
+      let body = game.checkStatus(req.user);
+      res.json(body);
+    })
+    .catch(next);
+});
+
 router.post('/games/:id/move', auth, async(req, res)=>{
-  console.log('move route');
   let game = await Game.findById(req.params.id);
   console.log(game);
   console.log(req.body);

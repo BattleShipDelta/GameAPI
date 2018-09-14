@@ -5,8 +5,7 @@ const express = require('express');
 import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
-import apiRouter from './src/routes/api';
-import inviteRouter from './src/routes/gameRoute';
+import gameRouter from './src/routes/gameRoute';
 
 
 const app = module.exports = express();
@@ -18,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 import authRouter from './src/routes/login-signup';
 app.use(authRouter);
 
-app.use('/api', apiRouter, inviteRouter);
+app.use('/api', gameRouter);
 
 app.start = (port) => 
   new Promise((resolveCallBack, rejectCallBack) => {

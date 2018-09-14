@@ -42,7 +42,7 @@ describe('app', ()=> {
     });
     let saved = await game.save();
     await request
-      .get(`/api/game/${saved._id}`)
+      .get(`/api/games/${saved._id}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .expect(response =>{
