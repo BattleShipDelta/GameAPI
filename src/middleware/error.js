@@ -8,7 +8,15 @@ export default (err, req, res, next) => {
   if(err.name === 'ValidationError') {
     res.statusCode = 400;
     res.json({
-      message: 'Please choose a new name',
+      message: err.message,
+    });
+    return;
+  }
+
+  if(err.code === 11000) {
+    res.statusCode = 409;
+    res.json({
+      message: 'This name is taken. Please try again',
     });
     return;
   }

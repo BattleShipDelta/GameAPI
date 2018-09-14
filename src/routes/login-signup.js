@@ -9,7 +9,7 @@ import User from '../model/userModel';
 import auth from '../middleware/auth-middleware';
 
 authRouter.post('/signup', (req, res, next) => {
-  console.log('This Is Running');
+  console.log('POST /signup');
   let user = new User(req.body);
   user.save()
     .then(user => {
@@ -18,6 +18,8 @@ authRouter.post('/signup', (req, res, next) => {
       });
     })
     .catch(next);
+
+    
 });
 
 authRouter.get('/login', auth, (req, res) => {
