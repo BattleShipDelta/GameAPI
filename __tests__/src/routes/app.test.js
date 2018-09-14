@@ -4,6 +4,7 @@ import app from '../../../app';
 import Player from '../../../src/constructors/game';
 import User from '../../../src/model/userModel';
 import Game from '../../../src/models/gameModel';
+import uuid from 'uuid';
 const request = require('supertest')(app);
 const mongoConnect = require('../../../src/util/mongo-connect');
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -18,12 +19,12 @@ describe('app', ()=> {
   beforeAll(async() => {
     await mongoConnect(MONGODB_URI);
     user = new User({
-      username:'Etahn',
+      username: uuid(),
       password:'BananaPhone123',
     });
     await user.save();
     opponent = new User({
-      username: 'Dylan',
+      username: uuid(),
       password: 'AppleBook123',
     });
     await opponent.save();
