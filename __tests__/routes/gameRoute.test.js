@@ -130,8 +130,10 @@ describe('an invite', ()=> {
         game.turnHandler(game.players[1], 'c2', 'e2');
         game.turnHandler(game.players[1], 'a4', 'a1');
         game.save();
+        
       });
       it('fires successfully', async()=> {
+        //need to hit c1, b1, c2, d2, e2, a4, a3, a2, a1
         await request
           .post(`/api/games/${game._id}/move`)
           .set('Authorization', `Bearer ${token}`)
@@ -139,19 +141,50 @@ describe('an invite', ()=> {
           .expect(200)
           .expect({ result: `a1 was a hit | 4: Player 2s turn | ${user.username}'s turn was processed.`});
         await request
-          .get(`/api/games/${game._id}`)
-          .set('Authorization', `Bearer ${token}`)
-          .expect(response=>{
-            console.log({token, opponentToken});
-            console.log(response.body);
-          });
-        await request
           .post(`/api/games/${game._id}/move`)
           .set('Authorization', `Bearer ${opponentToken}`)
           .send({coors:'e5'})
           .expect(200)
-          //Shouldn't be Etahn's turn
           .expect({ result: `e5 was a miss | 3: Player 1s turn | ${opponent.username}'s turn was processed.` });
+        //need to hit c1, b1, c2, d2, e2, a4, a3, a2
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'a2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'a2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'a3'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'a3'});
+        //sink ship length 4
+        await request
+          .post(`/api/games/${game._id}/move`)
+          .set('Authorization', `Bearer ${token}`)
+          .send({coors:'a4'})
+          .expect(200)
+          .expect(response=>{
+            console.log(response);
+          });
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'a4'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'e2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'e2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'d2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'d2'});
+        //sink ship length 3
+        await request
+          .post(`/api/games/${game._id}/move`)
+          .set('Authorization', `Bearer ${token}`)
+          .send({coors:'c2'})
+          .expect(response=>{
+            console.log(response.text);
+          });
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'c2'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'c1'});
+        await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'c1'});
+        // last ship sunk, player 2 loses
+        await request
+          .post(`/api/games/${game._id}/move`)
+          .set('Authorization', `Bearer ${token}`)
+          .send({coors:'b1'})
+          .expect(response=>{
+            expect(response.text).toMatch('Game Over');
+          });
+          
       });
       //Bug: turnHandler doesn't check players turn?
       it('returns 403(forbidden) when you play out of turn', async()=> {
