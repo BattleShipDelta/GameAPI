@@ -6,7 +6,7 @@ import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
 import apiRouter from './src/routes/api';
-import inviteRouter from './src/routes/inviteRoute';
+import inviteRouter from './src/routes/gameRoute';
 
 
 const app = module.exports = express();
