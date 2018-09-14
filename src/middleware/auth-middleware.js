@@ -8,6 +8,7 @@ export default (req, res, next) => {
   console.log('auth', req.url);
 
   if(!authHeader){
+    console.log('No auth header');
     return unauthorized();
   }
 
@@ -26,9 +27,13 @@ export default (req, res, next) => {
           req.user = user;
           return next();
         }
+        console.log(`user ${username} not found`);
         unauthorized();
       })
-      .catch(next);
+      .catch(err => {
+        console.error(err);
+        next(err);
+      });
   }
   else if (authHeader.match(/^bearer\s+/i)) {
     let token = authHeader.replace(/^bearer\s+/i, '');
@@ -39,11 +44,16 @@ export default (req, res, next) => {
           req.user = user;
           return next();
         }
+        console.log(`user not found for token ${token}`);
         unauthorized();
       })
-      .catch(next);
+      .catch(err => {
+        console.error(err);
+        next(err);
+      });
   }
   else {
+    console.log(`auth only supports Basic or Bearer; found ${authHeader}`);
     unauthorized();
   }
 
