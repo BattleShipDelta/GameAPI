@@ -2,10 +2,10 @@
 
 import uuid from 'uuid';
 
-import user from '../../../src/model/userModel';
-import auth from '../../../src/middleware/auth-middleware';
+import user from '../../src/models/userModel';
+import auth from '../../src/middleware/auth-middleware';
 
-const mongoConnect = require('../../../src/util/mongo-connect');
+const mongoConnect = require('../../src/util/mongo-connect');
 const MONGODB_URI = process.env.MONGODB_URI;
 
 describe('auth middleware', () => {

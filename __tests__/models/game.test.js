@@ -1,7 +1,7 @@
 'use strict';
-import Game from '../../../src/models/gameModel';
-const Player = require('../../../src/constructors/game');
-const mongoConnect = require('../../../src/util/mongo-connect');
+import Game from '../../src/models/gameModel';
+const Player = require('../../src/constructors/game');
+const mongoConnect = require('../../src/util/mongo-connect');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 console.log(MONGODB_URI);

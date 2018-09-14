@@ -5,7 +5,7 @@ const router = express.Router();
 
 import Player from '../constructors/game';
 import Game from '../models/gameModel';
-import User from '../model/userModel';
+import User from '../models/userModel';
 import auth from '../middleware/auth-middleware';
 import { request } from 'http';
 
