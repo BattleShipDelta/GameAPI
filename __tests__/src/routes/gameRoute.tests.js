@@ -57,14 +57,12 @@ describe('an invite', ()=> {
   });
   describe('ship placing', () => {
     let game;
-    let opponentToken;
 
     beforeEach(async() => {
       let p1 = new Player(user.username);
       let p2 = new Player(opponent.username);
       game = Game.start(p1,p2);
       await game.save();
-      opponentToken = user.generateToken();
     });
     afterEach(async()=> {
       await Game.deleteOne({_id: game._id});
