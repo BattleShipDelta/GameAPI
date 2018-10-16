@@ -52,7 +52,7 @@ describe('an invite', ()=> {
       .expect(200)
       .expect(response=>{
         console.log(response.text);
-        expect(response.text).toBeDefined();
+        expect(response.text).toBe('123');
       });     
   });
   describe('ls but in our api', () => {
