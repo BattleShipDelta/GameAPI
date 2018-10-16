@@ -41,6 +41,7 @@ router.get('/games', auth, async(req, res, next)=>{
     gameIds.push({
       id:game._id,
       players:game.players.map(player => player.name),
+      phase:game.phase,
     });
   });
   res.json(gameIds);
