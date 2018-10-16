@@ -88,6 +88,7 @@ gameSchema.methods.checkStatus = function(user){
       }
     });
     return {
+      '_id': this._id,
       'phase': this.phase,
       'shipStatuses': shipStatuses,
       'yourTurn': target.isTurn,

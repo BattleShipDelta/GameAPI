@@ -156,6 +156,7 @@ describe('an invite', ()=> {
           .expect(response => {
             expect(typeof response.body).toBe('object');
             expect(response.body.result.yourTurn).not.toBe(true);
+            expect(response.body.result._id).toBe(game._id.toString());
             expect(response.body.result.phase).toBe('3: Player 1s turn');
             expect(response.body.result.userShots).toEqual({'e5': false});
             expect(response.body.result.opponentShots).toEqual({'a1': true});
