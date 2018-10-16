@@ -14,9 +14,10 @@ router.post('/games', auth, async(req,res) => {
   let p2 = new Player(req.body.opponent);
   if (await User.findOne({username: req.body.opponent})){
     let game = Game.start(p1, p2);
-    let saved = await game.save();
-    console.log(game);
-    res.send(saved._id);
+    await game.save();
+    let result = game.checkStatus(req.user);
+
+    res.send(result);
 
     return;
   }else{

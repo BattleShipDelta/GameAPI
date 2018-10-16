@@ -52,7 +52,8 @@ describe('an invite', ()=> {
       .expect(200)
       .expect(response=>{
         console.log(response.text);
-        expect(response.text).toBeDefined();
+        //TODO Write better test for create
+        expect(response.body).toBeDefined();
       });     
   });
   describe('ls but in our api', () => {
