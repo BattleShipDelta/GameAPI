@@ -49,10 +49,8 @@ describe('app', ()=> {
         expect(response.body.phase).toBe('0: Both players placing ships');
         expect(response.body.shipStatuses[0].health).toBe(2);
         expect(response.body.yourTurn).toBe(true);
-        expect(response.body.myAttempts.hits).toEqual([]);
-        expect(response.body.myAttempts.misses).toEqual([]);
-        expect(response.body.theirAttempts.hits).toEqual([]);
-        expect(response.body.theirAttempts.misses).toEqual([]);
+        expect(response.body.userShots).toEqual({});
+        expect(response.body.opponentShots).toEqual({});
       });
   });
 });

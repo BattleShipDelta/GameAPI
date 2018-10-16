@@ -69,36 +69,30 @@ gameSchema.methods.checkStatus = function(user){
         'coordinates': ship.coordinates,
       });
     });
-    let myAttempts = {
-      hits:[],
-      misses:[],
-    };
+    let userShots = {};
     target.board.shotAt.forEach(shot => {
       if(opponent.board.taken.includes(shot)){
-        myAttempts.hits.push(shot);
+        userShots[shot] = true;
       }
       else{
-        myAttempts.misses.push(shot);
+        userShots[shot] = false;
       }
     });
-    let theirAttempts = {
-      hits:[],
-      misses:[],
-    };
+    let opponentShots = {};
     opponent.board.shotAt.forEach(shot => {
       if(target.board.taken.includes(shot)){
-        theirAttempts.hits.push(shot);
+        opponentShots[shot] = true;
       }
       else{
-        theirAttempts.misses.push(shot);
+        opponentShots[shot] = false;
       }
     });
     return {
       'phase': this.phase,
       'shipStatuses': shipStatuses,
       'yourTurn': target.isTurn,
-      'myAttempts': myAttempts,
-      'theirAttempts': theirAttempts,
+      'userShots': userShots,
+      'opponentShots': opponentShots,
     };
   } else return {'phase': this.phase};
 };
