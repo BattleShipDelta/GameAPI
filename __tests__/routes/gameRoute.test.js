@@ -75,6 +75,7 @@ describe('an invite', ()=> {
           expect(typeof response.body).toBe('object');
           expect(response.body[0]).toHaveProperty('id', game._id.toString());
           expect(response.body[0]).toHaveProperty('players', [user.username,opponent.username]);
+          expect(response.body[0]).toHaveProperty('phase', '0: Both players placing ships');
         });
     });
    
