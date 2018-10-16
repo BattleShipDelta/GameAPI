@@ -43,18 +43,20 @@ const gameSchema = Schema({
 });
 
 function arrayLimit(val) {
-  console.log(val.length);
   return val.length === 2;
 }
 
 gameSchema.methods.checkStatus = function(user){
   let isPlayer;
   let target;
+  let opponent;
   this.players.forEach(player =>{
-    console.log(player.name);
     if(String(user.username) === player.name){
       isPlayer = true;
       target = player;
+    }
+    else{
+      opponent = player;
     }
   });
   if(isPlayer){
@@ -67,11 +69,31 @@ gameSchema.methods.checkStatus = function(user){
         'coordinates': ship.coordinates,
       });
     });
+    let userShots = {};
+    target.board.shotAt.forEach(shot => {
+      if(opponent.board.taken.includes(shot)){
+        userShots[shot] = true;
+      }
+      else{
+        userShots[shot] = false;
+      }
+    });
+    let opponentShots = {};
+    opponent.board.shotAt.forEach(shot => {
+      if(target.board.taken.includes(shot)){
+        opponentShots[shot] = true;
+      }
+      else{
+        opponentShots[shot] = false;
+      }
+    });
     return {
+      '_id': this._id,
       'phase': this.phase,
       'shipStatuses': shipStatuses,
       'yourTurn': target.isTurn,
-      'shotAt': target.board.shotAt,
+      'userShots': userShots,
+      'opponentShots': opponentShots,
     };
   } else return {'phase': this.phase};
 };
@@ -114,7 +136,6 @@ gameSchema.methods.shoot = function(player, target, coor){
       let hit;
       ship.coordinates.forEach(coordinate =>{
         if (coordinate === coor){
-          console.log('hit');
           hit = true;
         }
       });

@@ -14,10 +14,10 @@ router.post('/games', auth, async(req,res) => {
   let p2 = new Player(req.body.opponent);
   if (await User.findOne({username: req.body.opponent})){
     let game = Game.start(p1, p2);
-    let saved = await game.save();
-    console.log(game);
-    let message = `Game ${saved._id} was created, players place your ships.`;
-    res.send(message);
+    await game.save();
+    let result = game.checkStatus(req.user);
+
+    res.send(result);
 
     return;
   }else{
@@ -41,6 +41,7 @@ router.get('/games', auth, async(req, res, next)=>{
     gameIds.push({
       id:game._id,
       players:game.players.map(player => player.name),
+      phase:game.phase,
     });
   });
   res.json(gameIds);
@@ -69,8 +70,9 @@ router.post('/games/:id/move', auth, async(req, res)=>{
     coors = [coors];
   }
   try{
-    let result = game.turnHandler(player, ...coors);
+    game.turnHandler(player, ...coors);
     await game.save();
+    let result = game.checkStatus(req.user);
     res.send(200, { result });
   }
   catch(error){

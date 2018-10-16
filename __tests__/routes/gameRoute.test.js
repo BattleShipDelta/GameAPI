@@ -52,7 +52,8 @@ describe('an invite', ()=> {
       .expect(200)
       .expect(response=>{
         console.log(response.text);
-        expect(response.text).toBeDefined();
+        //TODO Write better test for create
+        expect(response.body).toBeDefined();
       });     
   });
   describe('ls but in our api', () => {
@@ -75,6 +76,7 @@ describe('an invite', ()=> {
           expect(typeof response.body).toBe('object');
           expect(response.body[0]).toHaveProperty('id', game._id.toString());
           expect(response.body[0]).toHaveProperty('players', [user.username,opponent.username]);
+          expect(response.body[0]).toHaveProperty('phase', '0: Both players placing ships');
         });
     });
    
@@ -139,13 +141,26 @@ describe('an invite', ()=> {
           .set('Authorization', `Bearer ${token}`)
           .send({coors:'a1'})
           .expect(200)
-          .expect({ result: `a1 was a hit | 4: Player 2s turn | ${user.username}'s turn was processed.`});
+          .expect(response => {
+            expect(typeof response.body).toBe('object');
+            expect(response.body.result.yourTurn).not.toBe(true);
+            expect(response.body.result.phase).toBe('4: Player 2s turn');
+            expect(response.body.result.userShots).toEqual({'a1': true});
+            expect(response.body.result.opponentShots).toEqual({});
+          });
         await request
           .post(`/api/games/${game._id}/move`)
           .set('Authorization', `Bearer ${opponentToken}`)
           .send({coors:'e5'})
           .expect(200)
-          .expect({ result: `e5 was a miss | 3: Player 1s turn | ${opponent.username}'s turn was processed.` });
+          .expect(response => {
+            expect(typeof response.body).toBe('object');
+            expect(response.body.result.yourTurn).not.toBe(true);
+            expect(response.body.result._id).toBe(game._id.toString());
+            expect(response.body.result.phase).toBe('3: Player 1s turn');
+            expect(response.body.result.userShots).toEqual({'e5': false});
+            expect(response.body.result.opponentShots).toEqual({'a1': true});
+          });
         //need to hit c1, b1, c2, d2, e2, a4, a3, a2
         await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${token}`).send({coors:'a2'});
         await request.post(`/api/games/${game._id}/move`).set('Authorization', `Bearer ${opponentToken}`).send({coors:'a2'});

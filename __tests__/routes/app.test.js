@@ -49,6 +49,8 @@ describe('app', ()=> {
         expect(response.body.phase).toBe('0: Both players placing ships');
         expect(response.body.shipStatuses[0].health).toBe(2);
         expect(response.body.yourTurn).toBe(true);
+        expect(response.body.userShots).toEqual({});
+        expect(response.body.opponentShots).toEqual({});
       });
   });
 });
