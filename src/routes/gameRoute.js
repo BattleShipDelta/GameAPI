@@ -16,8 +16,7 @@ router.post('/games', auth, async(req,res) => {
     let game = Game.start(p1, p2);
     let saved = await game.save();
     console.log(game);
-    let message = `Game ${saved._id} was created, players place your ships.`;
-    res.send(message);
+    res.send(saved._id);
 
     return;
   }else{
