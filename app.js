@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-//import cors from 'cors';
+import cors from 'cors';
 import error from './src/middleware/error';
 import json404 from './src/middleware/404';
 
@@ -11,6 +11,7 @@ import gameRouter from './src/routes/gameRoute';
 const app = module.exports = express();
 
 //add routes
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
