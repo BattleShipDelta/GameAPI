@@ -72,7 +72,9 @@ describe('auth routes', () => {
       });
       return user.save();
     });
-
+    afterEach(async() => {
+      await User.deleteOne({ _id: user._id});
+    });
     it('GET returns 200 for a good login', () => {
       return request
         .get('/login')
@@ -98,6 +100,32 @@ describe('auth routes', () => {
         .get('/login')
         .auth(user.username, 'oops')
         .expect(401);
+    });
+  });
+
+  describe('GET /user', () => {
+    let password = uuid();
+    let user;
+    let token;
+    beforeEach(() => {
+      user = new User({
+        username: uuid(),
+        password,
+      });
+      return user.save();
+    });
+    afterEach(async() => {
+      await User.deleteOne({ _id: user._id});
+    });
+    it('returns the user', async() => {
+      token = user.generateToken();
+      console.log(token);
+      await request
+        .get('/user')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(response => {
+          expect(response.body.user).toBe(user.username);
+        });
     });
   });
 });

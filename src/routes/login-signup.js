@@ -34,4 +34,9 @@ authRouter.post('/login', auth, (req, res) => {
   });
 });
 
+authRouter.get('/user', auth, (req, res) => {
+  res.send({
+    user: req.user.username,
+  });
+});
 export default authRouter;
